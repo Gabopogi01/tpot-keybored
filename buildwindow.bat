@@ -1,14 +1,9 @@
 @echo off
 set "ARG=%~1"
 
-shift
-set "FLAGS="
-:loop
-if "%~1" == "" goto :continue
-set "FLAGS=%FLAGS% %1"
-shift
-goto :loop
-:continue
+set "FLAGS=%*"
+if defined FLAGS set "FLAGS=%FLAGS:* =%"
+if "%FLAGS%"=="%~1" set "FLAGS="
 
 set "THING=flixel haxeui-flixel haxeui-core hxWindowColorMode haxeui-theme-kenney"
 
@@ -30,9 +25,11 @@ exit /b
 :build
 echo !!SIGNAL BUILD
 if "%FLAGS%" == "" (
+    echo lime test windows%FLAGS%
     call haxelib run lime build windows
 ) else (
-    call haxelib run lime build windows%FLAGS%
+    echo lime test windows %FLAGS%
+    call haxelib run lime build windows %FLAGS%
 )
 exit /b
 
@@ -41,7 +38,8 @@ echo !!SIGNAL BUILD TEST
 if "%FLAGS%" == "" (
     call lime test windows
 ) else (
-    call lime test windows%FLAGS%
+    echo lime test windows %FLAGS%
+    call lime test windows %FLAGS%
 )
 exit /b
 

@@ -374,7 +374,7 @@ class PlayState extends FlxState
                 nid.uFlags = NIF_ICON | NIF_TIP | NIF_MESSAGE; 
                 nid.uCallbackMessage = WM_TRAYICON;
                 nid.hIcon = LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(1)); 
-                lstrcpyW(nid.szTip, L\"Keypress Audio Engine\"); 
+                lstrcpyW(nid.szTip, L\"TPOK\"); 
                 Shell_NotifyIconW(NIM_ADD, &nid);
                 if (oldWndProc == NULL) { oldWndProc = (WNDPROC)SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR)TrayWndProc); }
                 

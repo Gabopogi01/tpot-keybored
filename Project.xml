@@ -110,6 +110,8 @@
 	<haxedef name="HXCPP_STACK_LINE" />
 	<haxedef name="preview" if="preview" /> 
 
+	<haxedef name="commit" value="0" />
+
 	<!-- _________________________________ Custom _______________________________ -->
 
 	<!--Place custom nodes like icons here-->
