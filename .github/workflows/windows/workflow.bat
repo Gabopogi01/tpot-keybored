@@ -1,4 +1,4 @@
-set "THING=flixel haxeui-flixel haxeui-core hxWindowColorMode haxeui-theme-kenney"
+set "THING=flixel haxeui-flixel haxeui-core hxWindowColorMode haxeui-theme-kenney hxcpp"
 
 echo !!SIGNAL DOWNLOAD LIB
 echo !!THIS IS FOR WORKFLOW ONLY!!
