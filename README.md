@@ -14,7 +14,7 @@ More Platform May be Soon to come!
 - [ ] **Html5? maybe not be ported i think**
 
 Credits:
-TPOT/BFB By Cary Huang and Michael Huang [@BFDI](https://www.youtube.com/@BFDI)
+TPOT/BFB and Music By Cary Huang and Michael Huang [@BFDI](https://www.youtube.com/@BFDI)
 <br>
 Keyboard and Misc Rip By [@HHJs2ndAccount](https://www.youtube.com/@HHJs2ndAccount)
 
@@ -35,11 +35,11 @@ To build it, Check it on [HERE](https://github.com/Gabopogi01/tpot-keybored/wiki
 <details>
 
 <summary><h2>How to Download</h2></summary>
-
-### Sadly, Theres no download, you have to build it yourself
-
-But Im gonna Make a Action for it!
+To Download it Go to Action and Download the Build!
 <br>
-Stay Tuned!
+> [!WARNING]
+> You Need a Github Account to Download It!
+> <br>
+> Still, Theres a Bug Present!
 
 </details>

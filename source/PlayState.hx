@@ -9,10 +9,9 @@ import haxe.ui.Toolkit;
 import haxe.ui.ComponentBuilder;
 import flixel.system.FlxAssets;
 import flixel.FlxSprite;
-import haxe.ui.components.OptionBox;
 import haxe.ui.components.Label;
 import haxe.ui.components.Slider;
-import haxe.ui.components.Button;
+import backend.utils.SomeUtils;
 import flixel.sound.FlxSound;
 import flixel.math.FlxMath;
 import flixel.util.FlxTimer;
@@ -82,7 +81,6 @@ LRESULT CALLBACK TrayWndProc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) {
 // @:nullSafety
 class PlayState extends FlxState
 {
-    private var keyStates:Array<Bool> = [];
     private static var lastClickedMenuID:Int = -1;
     private var myUi:Dynamic;
     private var bg:FlxSprite;
@@ -102,7 +100,10 @@ class PlayState extends FlxState
 		Toolkit.init();
         PreviewMode.init();
 
-        Toolkit.styleSheet.parse('* { font-name: "' + FlxAssets.FONT_DEFAULT  + '"; font-size: 14px; }', "user");
+        Toolkit.styleSheet.parse('* { 
+            font-name: "' + FlxAssets.FONT_DEFAULT  + '";
+            font-size: 14px; 
+        }', "user");
 
         WindowColorMode.setWindowBorderColor([246,246,246]);
 
@@ -150,7 +151,6 @@ class PlayState extends FlxState
         fg_d.scrollFactor.set(0.3, 0.3); 
 
         super.create();
-        for (i in 0...512) { keyStates.push(false); }
 
 		myUi = ComponentBuilder.fromFile("assets/data/layouts/settings.xml");
         myUi.scrollFactor.set(0, 0); 
@@ -221,7 +221,7 @@ class PlayState extends FlxState
             titleSong = soundPath;
             if (myWindow != null){
                 infoLabel = cast(myWindow.findComponent('infoo'), Label);
-                infoLabel.text = " Now Playing: " + titleSong;
+                if (infoLabel != null) infoLabel.text = " Now Playing: " + titleSong;
             }
 
             soundMusc.volume = 0;
@@ -244,6 +244,8 @@ class PlayState extends FlxState
 	override public function update(elapsed:Float)
 	{
 		super.update(elapsed);
+
+        FlxG.mouse.useSystemCursor = true;
 
         if (soundMusc != null){
             FlxTween.cancelTweensOf(soundMusc);
@@ -322,18 +324,19 @@ class PlayState extends FlxState
 					lime.app.Application.current.window.visible = false;
             }
         }
+        var volSlidera = cast(myUi.findComponent("volSound"), Slider);
 
-		for (vk in 0...13) { checkAndPlayKey(vk, FlxG.random.bool(50) ? "ButtonPress" : "ButtonPressALT"); }
-		for (vk in 14...64) { checkAndPlayKey(vk, FlxG.random.bool(50) ? "ButtonPress" : "ButtonPressALT"); }
-		for (vk in 92...300) { checkAndPlayKey(vk, FlxG.random.bool(50) ? "ButtonPress" : "ButtonPressALT"); }
+		for (vk in 0...13) { SomeUtils.checkAndPlayKey(vk, FlxG.random.bool(50) ? "ButtonPress" : "ButtonPressALT", volSlidera.pos / 100); }
+		for (vk in 14...64) { SomeUtils.checkAndPlayKey(vk, FlxG.random.bool(50) ? "ButtonPress" : "ButtonPressALT", volSlidera.pos / 100); }
+		for (vk in 92...300) { SomeUtils.checkAndPlayKey(vk, FlxG.random.bool(50) ? "ButtonPress" : "ButtonPressALT", volSlidera.pos / 100); }
 		for (vk in 65...91) { 
             if (!useAginsounds){
-                checkAndPlayKey(vk, "press/Press" + String.fromCharCode(vk).toUpperCase());
+                SomeUtils.checkAndPlayKey(vk, "press/Press" + String.fromCharCode(vk).toUpperCase(), volSlidera.pos / 100);
             } else {
-                checkAndPlayKey(vk, "again/Retry" + String.fromCharCode(vk).toUpperCase());
+                SomeUtils.checkAndPlayKey(vk, "again/Retry" + String.fromCharCode(vk).toUpperCase(), volSlidera.pos / 100);
             }
         }
-		checkAndPlayKey(13, "Success");
+		SomeUtils.checkAndPlayKey(13, "Success");
 
         // var voxComponent = myUi.findComponent("kenneythemevox");
         //cast(voxComponent, OptionBox).disabled = true;
@@ -352,27 +355,6 @@ class PlayState extends FlxState
 
         FlxG.camera.scroll.x = FlxMath.lerp(FlxG.camera.scroll.x, mouseX,1-Math.exp(-elapsed * 5));
         FlxG.camera.scroll.y = FlxMath.lerp(FlxG.camera.scroll.y, mouseY,1-Math.exp(-elapsed * 5));
-	}
-
-
-
-	private function checkAndPlayKey(vk:Int, fileSuffix:String):Void
-	{
-		var isDownNow:Bool = false;
-		#if windows
-		var state:Int = untyped __cpp__("GetAsyncKeyState({0})", vk);
-		isDownNow = (state & 0x8000) != 0;
-		#end
-		var wasDownBefore:Bool = keyStates[vk];
-		if (isDownNow && !wasDownBefore) { 
-            var sounds = FlxG.sound.play(Paths.sound(fileSuffix)); 
-            var volSlider = myUi.findComponent("volSound");
-
-            if (volSlider != null) {
-                sounds.volume = cast(volSlider, Slider).pos / 100;
-            }
-        }
-		keyStates[vk] = isDownNow;
 	}
 
     public function createTrayIcon():Void
