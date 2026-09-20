@@ -8,15 +8,18 @@ This App Uses [HaxeFlixel](https://haxeflixel.com) and [HaxeUI](https://haxeui.o
 > This app is on Alpha!, Any Bugs Can be reported on Built in Issue Tab!
 
 This app only Supports Windows x64, x32(x86) is not tested yet.
+<br>
 More Platform May be Soon to come!
-- [] **Linux**
-- [] **Html5? maybe not be ported i think**
+- [ ] **Linux**
+- [ ] **Html5? maybe not be ported i think**
 
 Credits:
 TPOT/BFB By Cary Huang and Michael Huang [@BFDI](https://www.youtube.com/@BFDI)
+<br>
 Keyboard and Misc Rip By [@HHJs2ndAccount](https://www.youtube.com/@HHJs2ndAccount)
 
 ![light](https://github.com/Gabopogi01/tpot-keybored/blob/main/art/somereadme/light.png)
+<br>
 ![dark](https://github.com/Gabopogi01/tpot-keybored/blob/main/art/somereadme/dark.png)
 
 
@@ -33,9 +36,10 @@ To build it, Check it on [HERE](https://github.com/Gabopogi01/tpot-keybored/wiki
 
 <summary><h2>How to Download</h2></summary>
 
-Sadly, Theres no download, you have to build it yourself
+### Sadly, Theres no download, you have to build it yourself
 
 But Im gonna Make a Action for it!
+<br>
 Stay Tuned!
 
 </details>
