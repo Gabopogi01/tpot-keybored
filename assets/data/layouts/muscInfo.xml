@@ -1,0 +1,11 @@
+<window title="Music info and Settings" width="450" minimizable="false" maximizable="false">
+        <window-title width="100%">
+        </window-title>
+        <grid width="100%">
+            <label text=" Background Music" />
+            <slider width="100%" pos="100" id="volb" />
+            <checkbox text="Mute Background Music" id="mure"/>
+            <spacer width="20" />
+            <label text=" Now Playing: " id='infoo' />
+        </grid>
+</window>

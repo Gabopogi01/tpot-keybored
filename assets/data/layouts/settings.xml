@@ -1,0 +1,26 @@
+<vbox width="100%" height="100%">
+    <menubar width="100%">
+        <menu text="Options">
+            <menuitem text="Hide Window" onclick="lime.app.Application.current.window.visible = false;" />
+            <menucheckbox text="Use Try Again Sounds?" onchange="useAginsounds = this.selected"/>
+            <label text="  Keyboard Sounds" />
+            <slider id="volSound" width="100%" pos="100" />
+            <menu text="Themes">
+                <menuoptionbox text="Dark" onchange="haxe.ui.Toolkit.theme = 'dark'"/>
+                <menuseparator />
+                <menuoptionbox text="Light" selected="true" onchange="haxe.ui.Toolkit.theme = 'default'"/>
+                <menuseparator />
+                <!-- <menuoptionbox id="kenneythemevox" text="Kenney" onchange="haxe.ui.Toolkit.theme = 'kenney'"/> -->
+                 <!-- that broke thew windown -->
+            </menu>
+            <menuseparator />
+            <menuitem text="Exit" shortcutText="Alt+F4" onclick="lime.system.System.exit(0);" />
+        </menu>
+        <menuitem text="Music" id="openwinHAUISHDIUASHD" />
+        <!-- <menu text="Music">
+            <label text=" Background Sounds" />
+            <slider width="100%" pos="100" id="volb" />
+            <label text=" Now Playing: " id='infoo' />
+        </menu> -->
+    </menubar>
+</vbox>
