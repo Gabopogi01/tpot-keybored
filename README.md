@@ -10,3 +10,6 @@ This App Uses [HaxeFlixel](https://haxeflixel.com) and [HaxeUI](https://haxeui.o
 Credits:
 TPOT/BFB By Cary Huang and Michael Huang [@BFDI](https://www.youtube.com/@BFDI)
 Keyboard and Misc Rip By [@HHJs2ndAccount](https://www.youtube.com/@HHJs2ndAccount)
+
+![dark](https://github.com/Gabopogi01/tpot-keybored/blob/main/art/somereadme/dark.png)
+![light](https://github.com/Gabopogi01/tpot-keybored/blob/main/art/somereadme/light.png)
