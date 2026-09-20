@@ -14,7 +14,10 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: check
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Haxe
         uses: krdlab/setup-haxe@v2
@@ -28,8 +31,15 @@ jobs:
       - name: Setup Lime First
         run: haxelib run lime setup -alias -y -nocffi
 
+      - name: Calculate Total Commit Count
+        id: count_commits
+        shell: bash
+        run: |
+          TOTAL_COMMITS=$(git rev-list --count HEAD)
+          echo "TOTAL_COMMITS=$TOTAL_COMMITS" >> $GITHUB_ENV
+
       - name: Then Build it
-        run: ./buildwindow.bat --build -release -D commit=${{github.run_number}}
+        run: ./buildwindow.bat --build -release -D commit=${{ env.TOTAL_COMMITS }}
         shell: cmd
 
       # for debug
