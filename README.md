@@ -7,6 +7,11 @@ This App Uses [HaxeFlixel](https://haxeflixel.com) and [HaxeUI](https://haxeui.o
 > [!CAUTION]
 > This app is on Alpha!, Any Bugs Can be reported on Built in Issue Tab!
 
+This app only Supports Windows x64, x32(x86) is not tested yet.
+More Platform May be Soon to come!
+- [] **Linux**
+- [] **Html5? maybe not be ported i think**
+
 Credits:
 TPOT/BFB By Cary Huang and Michael Huang [@BFDI](https://www.youtube.com/@BFDI)
 Keyboard and Misc Rip By [@HHJs2ndAccount](https://www.youtube.com/@HHJs2ndAccount)
