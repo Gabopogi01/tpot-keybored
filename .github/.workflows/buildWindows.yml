@@ -1,0 +1,38 @@
+name: buildWin
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    permissions: write-all
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Haxe
+        uses: krdlab/setup-haxe@v2
+        with:
+          haxe-version: 4.3.7
+
+      - name: Download Libary
+        run: buildwindow.bat --dllib
+
+      - name: Then Build it
+        run: buildwindow.bat --build
+
+      # for debug
+      - name: dir
+        run: dir
+
+      - name: Upload Build
+        uses: actions/upload-artifact@v7
+        with:
+          name: Build
+          path: export/windows/bin
