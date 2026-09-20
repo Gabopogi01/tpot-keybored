@@ -30,9 +30,9 @@ exit /b
 :build
 echo !!SIGNAL BUILD
 if "%FLAGS%" == "" (
-    call lime build windows
+    call haxelib run lime build windows
 ) else (
-    call lime build windows%FLAGS%
+    call haxelib run lime build windows%FLAGS%
 )
 exit /b
 
