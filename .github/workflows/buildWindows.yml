@@ -22,10 +22,12 @@ jobs:
           haxe-version: 4.3.7
 
       - name: Download Libary
-        run: buildwindow.bat --dllib
+        run: ./buildwindow.bat --dllib
+        shell: cmd
 
       - name: Then Build it
-        run: buildwindow.bat --build
+        run: ./buildwindow.bat --build
+        shell: cmd
 
       # for debug
       - name: dir
