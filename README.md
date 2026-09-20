@@ -19,13 +19,13 @@ Keyboard and Misc Rip By [@HHJs2ndAccount](https://www.youtube.com/@HHJs2ndAccou
 
     To build it, Check it on [HERE](https://github.com/Gabopogi01/tpot-keybored/wiki/How-to-build-it)!
     - Bugs maybe Pressent, GoodLuck!
-<details>
+</details>
 
 <details>
     <summary><h2>How to Download</h2></summary>
 
     Sadly, Theres no download, you have to build it yourself, |(
-        
+
     But Im gonna Make a Action for it!
     Stay Tuned!
-<details>
+</details>
