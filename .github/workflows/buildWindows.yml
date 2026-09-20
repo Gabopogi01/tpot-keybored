@@ -22,11 +22,14 @@ jobs:
           haxe-version: 4.3.7
 
       - name: Download Libary
-        run: ./buildwindow.bat --dllib
+        run: ./.github/workflows/windows/workflow.bat
         shell: cmd
 
+      - name: Setup Lime First
+        run: haxelib run lime setup -alias -y -nocffi
+
       - name: Then Build it
-        run: ./buildwindow.bat --build
+        run: ./buildwindow.bat --build -release
         shell: cmd
 
       # for debug
