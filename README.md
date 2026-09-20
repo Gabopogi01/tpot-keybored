@@ -36,10 +36,9 @@ To build it, Check it on [HERE](https://github.com/Gabopogi01/tpot-keybored/wiki
 
 <summary><h2>How to Download</h2></summary>
 To Download it Go to Action and Download the Build!
+
 <br>
+
 > [!WARNING]
 > You Need a Github Account to Download It!
-> <br>
-> Still, Theres a Bug Present!
-
 </details>

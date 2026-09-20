@@ -103,6 +103,7 @@ class PlayState extends FlxState
         Toolkit.styleSheet.parse('* { 
             font-name: "' + FlxAssets.FONT_DEFAULT  + '";
             font-size: 14px; 
+            cursor: default;
         }', "user");
 
         WindowColorMode.setWindowBorderColor([246,246,246]);
