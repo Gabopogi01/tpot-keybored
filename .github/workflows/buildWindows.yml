@@ -25,7 +25,7 @@ jobs:
           haxe-version: 4.3.7
 
       - name: Download Libary
-        run: ./.github/workflows/windows/workflow.bat
+        run: ./.github/workflows/wokflo-tool/workflow.bat
         shell: cmd
 
       - name: Setup Lime First
