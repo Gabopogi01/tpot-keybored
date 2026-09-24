@@ -12,6 +12,6 @@ assignees:
 [weed]: <> (Or can be found on bottom left of a app!)
 #### Commit:
 
-## Explain Your Issue:
 [weed]: <> (CHECK FIRST IF ITS A DUPLICATE ISSUE!!!)
 [weed]: <> (ADD A IMAGE FOR A PROOF BUT IF IT CRASHES IMMEDIATELY, DONT USE A SCREENSHOT!!!)
+## Explain Your Issue:
