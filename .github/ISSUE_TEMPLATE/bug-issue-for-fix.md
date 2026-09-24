@@ -1,11 +1,12 @@
 ---
-name: "Bug Issue"
-about: "Use this issue for a Bug Fix"
+name: Bug issue for fix
+about: Use this issue for a Bug Fix
 title: "[Bug] "
-labels: ""
-assignees:
+labels: ''
+assignees: ''
 
 ---
+
 [weed]: <> (Automaticly target windows because its only windows only)
 
 ## What is the Commit you Download on the Actions tab?
