@@ -21,7 +21,7 @@ echo arg list:
 echo --build
 echo --buildtest
 echo --dllib
-echo    -s --silent dont use persent, useful for workflow
+echo    -q --quiet dont use persent, useful for workflow
 exit /b
 
 :build
@@ -47,8 +47,8 @@ exit /b
 
 :dllib
 
-if "%FLAGS%"=="-s" set "SILENT=true"
-if "%FLAGS%"=="--silent" set "SILENT=true"
+if "%FLAGS%"=="-q" set "SILENT=true"
+if "%FLAGS%"=="--quiet" set "SILENT=true"
 
 echo !!SIGNAL DOWNLOAD LIB
 if "%SILENT%"=="false" (
@@ -57,7 +57,7 @@ if "%SILENT%"=="false" (
     )
 ) else (
     for %%i in (%THING%) do (
-        haxelib install %%i --silent
+        haxelib --quiet install %%i
     )
 )
 echo.
