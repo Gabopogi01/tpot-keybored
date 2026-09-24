@@ -1,5 +1,6 @@
 @echo off
 set "ARG=%~1"
+set "SILENT=false"
 
 set "FLAGS=%*"
 if defined FLAGS set "FLAGS=%FLAGS:* =%"
@@ -20,6 +21,7 @@ echo arg list:
 echo --build
 echo --buildtest
 echo --dllib
+echo    -s --silent dont use persent, useful for workflow
 exit /b
 
 :build
@@ -44,9 +46,19 @@ if "%FLAGS%" == "" (
 exit /b
 
 :dllib
+
+if "%FLAGS%"=="-s" set "SILENT=true"
+if "%FLAGS%"=="--silent" set "SILENT=true"
+
 echo !!SIGNAL DOWNLOAD LIB
-for %%i in (%THING%) do (
-    haxelib install %%i
+if "%SILENT%"=="false" (
+    for %%i in (%THING%) do (
+        haxelib install %%i
+    )
+) else (
+    for %%i in (%THING%) do (
+        haxelib install %%i --silent
+    )
 )
 echo.
 echo done, use %~nx0 --build or --buildtest!
