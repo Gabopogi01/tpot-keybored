@@ -5,7 +5,7 @@ set "FLAGS=%*"
 if defined FLAGS set "FLAGS=%FLAGS:* =%"
 if "%FLAGS%"=="%~1" set "FLAGS="
 
-set "THING=flixel haxeui-flixel haxeui-core hxWindowColorMode haxeui-theme-kenney"
+set "THING=flixel haxeui-flixel haxeui-core hxWindowColorMode haxeui-theme-kenney hxcpp"
 
 if "%ARG%" == ""          goto :help
 if "%ARG%" == "--build"     goto :build
