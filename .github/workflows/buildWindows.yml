@@ -25,7 +25,7 @@ jobs:
           haxe-version: 4.3.7
 
       - name: Download Libary
-        run: ./.github/workflows/wokflo-tool/workflow.bat
+        run: ./buildwindow.bat -dllib
         shell: cmd
 
       - name: Setup Lime First
@@ -49,5 +49,5 @@ jobs:
       - name: Upload Build
         uses: actions/upload-artifact@v7
         with:
-          name: Build
+          name: windowBuild
           path: ./export/windows/bin

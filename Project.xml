@@ -53,7 +53,7 @@
 	<haxelib name="flixel" />
 	<haxelib name="haxeui-flixel" />
 	<haxelib name="haxeui-core" />
-	<haxelib name="hxWindowColorMode" />
+	<haxelib name="hxWindowColorMode" if="windows" />
 	<haxelib name="haxeui-theme-kenney" />
 	
 	<!--In case you want to use the addons package-->
@@ -112,9 +112,15 @@
 
 	<haxedef name="commit" value="0" />
 
+	<window background="true" if="linux" />
+	<haxedef name="lime-background-execution" if="linux" />
+	<haxedef name="openfl-background-execution" if="linux" />
+
 	<!-- _________________________________ Custom _______________________________ -->
 
 	<!--Place custom nodes like icons here-->
 	<dependency name="shell32.lib" if="windows" />
+
+	<dependency name="gdk-pixbuf-2.0" if="linux" type="pkgconfig" />
 
 </project>

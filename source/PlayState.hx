@@ -17,7 +17,10 @@ import flixel.math.FlxMath;
 import flixel.util.FlxTimer;
 import haxe.ui.containers.windows.Window;
 import sys.FileSystem;
+#if windows
 import hxwindowmode.WindowColorMode;
+#end
+import backend.utils.linux.TrayHandler;
 import haxe.ui.containers.windows.WindowManager;
 import haxe.ui.events.MouseEvent;
 import haxe.ui.components.CheckBox;
@@ -25,59 +28,19 @@ import haxe.ui.events.UIEvent;
 import haxe.ui.containers.menus.MenuItem;
 import backend.special.PreviewMode;
 
-#if cpp
+#if linux
 @:cppFileCode('
-#include <windows.h>
-#include <shellapi.h>
+#include <gtk/gtk.h>
+#include <haxe/io/Bytes.h>
 
-#pragma comment(lib, "shell32.lib")
-#pragma comment(lib, "user32.lib")
-
-#define WM_TRAYICON (WM_USER + 1)
-#define ID_BUTTON_A  1004  
-#define ID_BUTTON_B  1005  
-#define ID_TRAY_EXIT 1006  
-
-NOTIFYICONDATAW nid = { 0 };
-WNDPROC oldWndProc = NULL;
-void (*onMenuClickedInHaxe)(int itemID) = NULL;
-
-LRESULT CALLBACK TrayWndProc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) {
-    if (msg == WM_TRAYICON) {
-        if (LOWORD(lp) == WM_RBUTTONUP) {
-            HMENU hMenu = CreatePopupMenu();
-            if (hMenu) {
-                AppendMenuW(hMenu, MF_STRING, ID_BUTTON_A, L"Show Window");
-                AppendMenuW(hMenu, MF_STRING, ID_BUTTON_B, L"Hide Window");
-                
-                AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-                AppendMenuW(hMenu, MF_STRING, ID_TRAY_EXIT, L"Exit App");
-
-                POINT pt;
-                GetCursorPos(&pt);
-                SetForegroundWindow(hwnd); 
-                TrackPopupMenu(hMenu, TPM_BOTTOMALIGN | TPM_LEFTALIGN, pt.x, pt.y, 0, hwnd, NULL);
-                DestroyMenu(hMenu);
-            }
-        }
-    }
-    else if (msg == WM_COMMAND) {
-        int id = LOWORD(wp);
-        
-        if (onMenuClickedInHaxe != NULL) {
-            onMenuClickedInHaxe(id);
-        }
-
-        switch (id) {
-            case ID_BUTTON_A: ShowWindow(hwnd, SW_SHOW); break;
-            case ID_BUTTON_B: ShowWindow(hwnd, SW_HIDE); break;
-            case ID_TRAY_EXIT: Shell_NotifyIconW(NIM_DELETE, &nid); ExitProcess(0); break;
-        }
-    }
-    return CallWindowProc(oldWndProc, hwnd, msg, wp, lp);
+extern "C" {
+    extern void (*onMenuClickedInHaxe)(int itemID);
+    void init_tray_icon(const char* icon_path_or_name);
+    void init_tray_icon_with_pixels(const unsigned char* pixels, int width, int height);
 }
 ')
 #end
+
 // @:nullSafety
 class PlayState extends FlxState
 {
@@ -106,7 +69,9 @@ class PlayState extends FlxState
             cursor: default;
         }', "user");
 
+        #if windows
         WindowColorMode.setWindowBorderColor([246,246,246]);
+        #end
 
         @:privateAccess {
             if (haxe.ui.Toolkit._initialized) {
@@ -150,6 +115,7 @@ class PlayState extends FlxState
 
         bg_d.scrollFactor.set(0.5, 0.5); 
         fg_d.scrollFactor.set(0.3, 0.3); 
+        TrayHandler.init();
 
         super.create();
 
@@ -246,6 +212,8 @@ class PlayState extends FlxState
 	{
 		super.update(elapsed);
 
+        TrayHandler.update();
+
         FlxG.mouse.useSystemCursor = true;
 
         if (soundMusc != null){
@@ -256,12 +224,16 @@ class PlayState extends FlxState
         if (Toolkit.theme != lastTheme) {
             if (Toolkit.theme == "dark") {
                 bg_d.visible = fg_d.visible = true;
+                #if windows
                 WindowColorMode.setWindowBorderColor([61,63,65]);
                 WindowColorMode.setDarkMode();
+                #end
             } else {
                 bg_d.visible = fg_d.visible = false;
+                #if windows
                 WindowColorMode.setWindowBorderColor([246,246,246]);
                 WindowColorMode.setLightMode();
+                #end
             }
             soundMusc.stop();
             lastTheme = Toolkit.theme;
@@ -325,6 +297,7 @@ class PlayState extends FlxState
 					lime.app.Application.current.window.visible = false;
             }
         }
+
         var volSlidera = cast(myUi.findComponent("volSound"), Slider);
 
 		for (vk in 0...13) { SomeUtils.checkAndPlayKey(vk, FlxG.random.bool(50) ? "ButtonPress" : "ButtonPressALT", volSlidera.pos / 100); }
@@ -336,7 +309,7 @@ class PlayState extends FlxState
             } else {
                 SomeUtils.checkAndPlayKey(vk, "again/Retry" + String.fromCharCode(vk).toUpperCase(), volSlidera.pos / 100);
             }
-        }
+        };
 		SomeUtils.checkAndPlayKey(13, "Success");
 
         // var voxComponent = myUi.findComponent("kenneythemevox");
@@ -381,6 +354,37 @@ class PlayState extends FlxState
                 ShowWindow(hwnd, SW_HIDE);
             }
         ", nativeCallable);
+        #elseif linux
+        var nativeCallable = cpp.Function.fromStaticFunction(haxeMenuCallback);
+        
+        var appWindow = lime.app.Application.current.window;
+        
+        if (appWindow != null) {
+            var windowImage = appWindow.readPixels(); 
+            
+            if (windowImage != null && windowImage.buffer != null) {
+                var rawBytes = windowImage.buffer.data;
+                var width:Int = windowImage.width;
+                var height:Int = windowImage.height;
+                
+                untyped __cpp__("
+                    // Force include the full definition of the Bytes object for the C++ compiler
+                    #include <haxe/io/Bytes.h>
+
+                    onMenuClickedInHaxe = {0}; 
+                    
+                    // Extract the raw array address safely via the internal pointer method
+                    const unsigned char* pixel_data = (const unsigned char*){1}->buffer->b->Pointer();
+                    
+                    init_tray_icon_with_pixels(pixel_data, {2}, {3});
+                ", nativeCallable, rawBytes, width, height);
+            }
+        } else {
+            untyped __cpp__("
+                onMenuClickedInHaxe = {0}; 
+                init_tray_icon(\"applications-other\");
+            ", nativeCallable);
+        }
         #end
     }
 
@@ -394,6 +398,8 @@ class PlayState extends FlxState
                 if (hwnd != NULL) { SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR)oldWndProc); oldWndProc = NULL; }
             }
         ");
+        #elseif linux
+        untyped __cpp__("gtk_main_quit();");
         #end
     }
 
