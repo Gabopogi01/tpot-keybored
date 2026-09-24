@@ -10,8 +10,8 @@ This App Uses [HaxeFlixel](https://haxeflixel.com) and [HaxeUI](https://haxeui.o
 This app only Supports Windows x64, x32(x86) is not tested yet.
 <br>
 More Platform May be Soon to come!
-- [ ] **Linux**
-- [ ] **Html5? maybe not be ported i think**
+- [ ] **Linux** Discontined
+- [ ] **Html5? maybe not be ported i think** Discontined
 
 Credits:
 TPOT/BFB and Music By Cary Huang and Michael Huang [@BFDI](https://www.youtube.com/@BFDI)
