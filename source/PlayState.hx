@@ -241,6 +241,16 @@ class PlayState extends FlxState
     var dontSlide = false;
     var volSlider:Slider;
     var lastThemea = true;
+    var timera:FlxTimer;
+
+    private function addchar(){
+        timera = new FlxTimer().start(FlxG.random.int(10, 40), (_)->{
+            var char = new backend.PassingBy(0, 0, null, false, 7, true, 7);
+            char.scale.set(0.7, 0.7);
+            add(char);
+            addchar();
+        });
+    }
 
 	override public function update(elapsed:Float)
 	{
@@ -258,10 +268,12 @@ class PlayState extends FlxState
                 bg_d.visible = fg_d.visible = true;
                 WindowColorMode.setWindowBorderColor([61,63,65]);
                 WindowColorMode.setDarkMode();
+                addchar();
             } else {
                 bg_d.visible = fg_d.visible = false;
                 WindowColorMode.setWindowBorderColor([246,246,246]);
                 WindowColorMode.setLightMode();
+                if(timera != null) timera.cancel();
             }
             soundMusc.stop();
             lastTheme = Toolkit.theme;
